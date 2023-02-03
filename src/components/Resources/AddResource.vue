@@ -1,4 +1,15 @@
 <template>
+  <base-dialog v-if="dataIsInvalid" title="Invalid input" @close="confirmError">
+    <template #default>
+      <p>Unfortunatly, at leeast one input is Invalid.</p>
+      <p>
+        Please make shure you enter at least a few charecters into each field.
+      </p>
+    </template>
+    <template #actions>
+      <base-button @click="confirmError">OK</base-button>
+    </template>
+  </base-dialog>
   <base-card>
     <form @submit.prevent="submitData">
       <div class="form-control">
@@ -26,11 +37,14 @@
 </template>
 
 <script>
+import BaseButton from "../UI/BaseButton.vue";
 export default {
+  components: { BaseButton },
   emits: ["add-resource"],
   inject: ["addResource"],
   data() {
     return {
+      dataIsInvalid: false,
       enteredTitle: "",
       enteredDescription: "",
       enteredLink: "",
@@ -38,11 +52,22 @@ export default {
   },
   methods: {
     submitData() {
+      if (
+        this.enteredTitle.trim() === "" ||
+        this.enteredDescription.trim() === "" ||
+        this.enteredLink.trim() === ""
+      ) {
+        this.dataIsInvalid = true;
+        return;
+      }
       this.addResource(
         this.enteredTitle,
         this.enteredDescription,
         this.enteredLink
       );
+    },
+    confirmError() {
+      this.dataIsInvalid = false;
     },
   },
 };
