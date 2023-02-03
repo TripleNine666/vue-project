@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Some Text</h1>
+    <h1>The best resources</h1>
   </header>
 </template>
 
