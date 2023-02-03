@@ -1,15 +1,21 @@
 <template>
-  <base-dialog v-if="dataIsInvalid" title="Invalid input" @close="confirmError">
-    <template #default>
-      <p>Unfortunatly, at leeast one input is Invalid.</p>
-      <p>
-        Please make shure you enter at least a few charecters into each field.
-      </p>
-    </template>
-    <template #actions>
-      <base-button @click="confirmError">OK</base-button>
-    </template>
-  </base-dialog>
+  <teleport to="body">
+    <base-dialog
+      v-if="dataIsInvalid"
+      title="Invalid input"
+      @close="confirmError"
+    >
+      <template #default>
+        <p>Unfortunatly, at leeast one input is Invalid.</p>
+        <p>
+          Please make shure you enter at least a few charecters into each field.
+        </p>
+      </template>
+      <template #actions>
+        <base-button @click="confirmError">OK</base-button>
+      </template>
+    </base-dialog>
+  </teleport>
   <base-card>
     <form @submit.prevent="submitData">
       <div class="form-control">
